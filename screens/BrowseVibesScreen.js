@@ -22,18 +22,44 @@ export default function BrowseVibesScreen() {
   // - selectedVibe: tracks which mood/vibe the user has chosen
   // - weather: stores weather data from the API
   // - loading: shows/hides loading spinner while fetching data
+  const [selectedVibe, setSelectedVibe] = useState('Chill');
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-
-  //  2) CREATE useEffect runs code when component loads 
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        setLoading(true);
+        const data = await getWeatherData();
+        setWeather(data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      } finally {
+        setLoading(false);
+      }
+  //  2) CREATE useEffect runs code when component loads
   // - Empty dependency array [] means this only runs once
   // - Automatically fetches weather data when screen loads
+    };
+    fetchWeather();
+  }, []);
 
   // 3) WRITE a function that fetches weather data from an API
-  // should be try, catch, finally 
-
+  // should be try, catch, finally
+  const fetchWeather = async () => {
+    try {
+      setLoading(true);
+      const data = await getWeatherData();
+      setWeather(data);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // 4) loading screen, so what should be true here?
-  if (_______) {
+  if (loading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#6366f1" />
@@ -82,7 +108,7 @@ export default function BrowseVibesScreen() {
               selectedVibe === vibe.name && { backgroundColor: vibe.color },
             ]}
             // 5) What function should go here? What useState variable should change?
-            onPress={() => ____________}
+            onPress={() => setSelectedVibe(vibe.name)}
           >
             <Text style={styles.vibeEmoji}>{vibe.emoji}</Text>
             <Text

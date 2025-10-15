@@ -8,16 +8,15 @@ import {
 } from 'react-native';
 
 // welcome screen, two buttons for get started & browse vibes
-
 export default function WelcomeScreen({ navigation }) {
   const handleGetStarted = () => {
     // 1) What screen here?
-    navigation.navigate(____________);
+    navigation.navigate('CurrentVibes');
   };
 
   const handleBrowseVibes = () => {
     // 2) What screen here?
-    navigation.navigate(______________);
+    navigation.navigate('BrowseVibes');
   };
 
   return (

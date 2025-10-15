@@ -17,23 +17,49 @@ export default function CurrentVibeScreen({ navigation }) {
   // - loading: controls loading spinner visibility
   // - refreshing: controls pull-to-refresh functionality
   // - error: stores any error messages to display to user
+  const [weather, setWeather] = useState(null);
+  const [vibe, setVibe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const weatherData = await getWeatherData();
+      setWeather(weatherData);
+      const vibeData = getWeatherVibe(weatherData);
+      setVibe(vibeData);
+    } catch (err) {
+      setError('Failed to load data. Please try again.');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
   // 2) WRITE main data fetching function that gets weather and then gets the vibe
   // format
   // in the try -->  it should getWeatherData, getVibeData, then change useState variables
   // remember catch/finally 
 
-  
-  //  3) CREATE useEffect runs function above runs when component loads 
+  //  3) CREATE useEffect runs function above runs when component loads
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // 4) 
   const onRefresh = () => {
-    _____________  // useState variable?
-    ______________ // call function #2 again 
+    setRefreshing(true);
+    fetchData();
   };
 
   // 5) loading screen, so what should be true here?
-  if (________) {
+  if (loading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#6366f1" />
@@ -57,6 +83,7 @@ export default function CurrentVibeScreen({ navigation }) {
   // - Gets activities that match the current vibe, limited to top 3
   // - Determines time of day using JavaScript Date object and conditional logic
   // - These calculations happen every time the component re-renders
+
   const recommendedActivities = getActivitiesForVibe(vibe.vibe, weather).slice(0, 3);
   const timeOfDay = new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 17 ? 'Afternoon' : 'Evening';
 
@@ -284,5 +311,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  navButtonTextSecondary: {
+    color: '#f3f4f6',
   },
 });

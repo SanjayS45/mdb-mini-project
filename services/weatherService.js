@@ -1,5 +1,5 @@
 // START: ADD YOUR API KEY HERE!
-const API_KEY = '';
+const API_KEY = 'ca1a6f13aea2b39a40a8fbb2fad56fbf';
 const BERKELEY_LAT = 37.8715;
 const BERKELEY_LON = -122.2730;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';

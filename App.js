@@ -29,6 +29,21 @@ export default function App() {
           },
         }}
       >
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen
+          name="CurrentVibes"
+          component={CurrentVibeScreen}
+          options={{ title: 'Current Vibes' }}
+        />
+        <Stack.Screen
+          name="BrowseVibes"
+          component={BrowseVibesScreen}
+          options={{ title: 'Browse Vibes' }}
+        />
         
 
 
